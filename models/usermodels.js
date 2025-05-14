@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mysql = require("mysql2/promise");
 
+// Tạo kết nối đến cơ sở dữ liệu MySQL
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
