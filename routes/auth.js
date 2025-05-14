@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "2h" }
     );
-    res.json({ token, message: "Đăng nhập thành công" });
+    res.json({ token, message: "Đăng nhập thành công!" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Lỗi server" });
