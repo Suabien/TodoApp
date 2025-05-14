@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const authRoutes = require("./routes/auth");
 
-// Middleware parse JSON
+// Middleware parse JSON.
 app.use(express.json());
 
 // Các route auth

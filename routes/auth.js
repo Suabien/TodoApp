@@ -44,14 +44,14 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res
         .status(400)
-        .json({ message: "Sai tên đăng nhập hoặc mật khẩu" });
+        .json({ message: "Sai tên đăng nhập hoặc mật khẩu!" });
     }
     const token = jwt.sign(
       { userId: user.id, name: user.name, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "2h" }
     );
-    res.json({ token, message: "Đăng nhập thành công" });
+    res.json({ token, message: "Đăng nhập thành công!" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Lỗi server" });
