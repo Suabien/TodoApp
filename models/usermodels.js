@@ -1,14 +1,6 @@
-require("dotenv").config();
-const mysql = require("mysql2/promise");
+const pool = require("../config/db");
 
-// Tạo kết nối đến cơ sở dữ liệu MySQL
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-});
-
+// Tạo user mới
 const createUser = async (name, passwordHash, email) => {
   const [rows] = await pool.execute(
     "INSERT INTO user (name, password, email) VALUES (?, ?, ?)",
@@ -17,6 +9,7 @@ const createUser = async (name, passwordHash, email) => {
   return rows;
 };
 
+// Tìm user theo tên
 const findUserByName = async (name) => {
   const [rows] = await pool.execute("SELECT * FROM user WHERE name = ?", [
     name,
