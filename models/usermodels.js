@@ -1,20 +1,10 @@
-const pool = require("../config/db");
+class User {
+  constructor({ id, name, password, email }) {
+    this.id = id;
+    this.name = name;
+    this.password = password;
+    this.email = email;
+  }
+}
 
-// Tạo user mới
-const createUser = async (name, passwordHash, email) => {
-  const [rows] = await pool.execute(
-    "INSERT INTO user (name, password, email) VALUES (?, ?, ?)",
-    [name, passwordHash, email]
-  );
-  return rows;
-};
-
-// Tìm user theo tên
-const findUserByName = async (name) => {
-  const [rows] = await pool.execute("SELECT * FROM user WHERE name = ?", [
-    name,
-  ]);
-  return rows[0];
-};
-
-module.exports = { createUser, findUserByName };
+module.exports = User;
