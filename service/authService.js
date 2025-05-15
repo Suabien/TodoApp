@@ -1,10 +1,46 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { createUser, findUserByName } = require("../repository/userRepo");
-const User = require("../models/usermodels");
+const { createUser, findUserByName } = require("../repository/userRepository");
+const { User, userSchema } = require("../models/userModel");
+
+// Hàm validate
+function validateUserInput({ name, email, password }) {
+  if (userSchema.name.required && (!name || typeof name !== "string")) {
+    return "Tên là bắt buộc";
+  }
+  if (
+    name.length < userSchema.name.minLength ||
+    name.length > userSchema.name.maxLength
+  ) {
+    return `Tên phải tối thiểu ${userSchema.name.minLength} đến ${userSchema.name.maxLength} ký tự`;
+  }
+  if (userSchema.email.required && (!email || typeof email !== "string")) {
+    return "Email là bắt buộc";
+  }
+  if (
+    email.length === 0 ||
+    email.length > userSchema.email.maxLength ||
+    !userSchema.email.pattern.test(email)
+  ) {
+    return "Email không hợp lệ!";
+  }
+  if (
+    userSchema.password.required &&
+    (!password || typeof password !== "string")
+  ) {
+    return "Mật khẩu là bắt buộc";
+  }
+  if (
+    password.length < userSchema.password.minLength ||
+    password.length > userSchema.password.maxLength
+  ) {
+    return `Mật khẩu phải tối thiểu ${userSchema.password.minLength} đến ${userSchema.password.maxLength} ký tự`;
+  }
+  return null;
+}
 
 exports.registerUser = async (name, password, email) => {
-  const error = User.validate({ name, email, password });
+  const error = validateUserInput({ name, email, password });
   if (error) {
     return { error };
   }
