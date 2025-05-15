@@ -1,5 +1,5 @@
 require("dotenv").config();
-const userService = require("../service/userservice");
+const userService = require("../service/authService");
 
 // Xử lý đăng ký
 exports.signup = async (req, res) => {

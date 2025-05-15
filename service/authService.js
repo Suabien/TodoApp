@@ -1,11 +1,12 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { createUser, findUserByName } = require("../repository/userrepo");
+const { createUser, findUserByName } = require("../repository/userRepo");
 const User = require("../models/usermodels");
 
 exports.registerUser = async (name, password, email) => {
-  if (!name || !password || !email) {
-    return { error: "Vui lòng cung cấp đầy đủ thông tin" };
+  const error = User.validate({ name, email, password });
+  if (error) {
+    return { error };
   }
   const existingUser = await findUserByName(name);
   if (existingUser) {
