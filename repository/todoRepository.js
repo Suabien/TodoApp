@@ -6,10 +6,10 @@ exports.getAllTodo = async () => {
 };
 
 exports.getTodo = async (limit, offset) => {
-  const [rows] = await pool.execute(
-    "SELECT * FROM todo LIMIT ? OFFSET ?",
-    [limit, offset]
-  );
+  const [rows] = await pool.execute("SELECT * FROM todo LIMIT ? OFFSET ?", [
+    limit,
+    offset,
+  ]);
   return rows;
 };
 
@@ -35,6 +35,8 @@ exports.deleteTodo = async (id) => {
 };
 
 exports.checkTypeIdExists = async (type_id) => {
-  const [rows] = await pool.execute("SELECT id FROM type WHERE id = ?", [type_id]);
+  const [rows] = await pool.execute("SELECT id FROM type WHERE id = ?", [
+    type_id,
+  ]);
   return rows.length > 0;
 };
