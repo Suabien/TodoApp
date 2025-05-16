@@ -6,7 +6,7 @@ const { User, userSchema } = require("../models/userModel");
 // Hàm validate
 function validateUserInput({ name, email, password }) {
   if (userSchema.name.required && (!name || typeof name !== "string")) {
-    return { status: 400, error: "Tên là bắt buộc" };
+    return { status: 400, message: "Tên là bắt buộc" };
   }
   if (
     name.length < userSchema.name.minLength ||
@@ -14,11 +14,11 @@ function validateUserInput({ name, email, password }) {
   ) {
     return {
       status: 400,
-      error: `Tên phải tối thiểu ${userSchema.name.minLength} đến ${userSchema.name.maxLength} ký tự`,
+      message: `Tên phải tối thiểu ${userSchema.name.minLength} đến ${userSchema.name.maxLength} ký tự`,
     };
   }
   if (userSchema.email.required && (!email || typeof email !== "string")) {
-    return { status: 400, error: "Email là bắt buộc" };
+    return { status: 400, message: "Email là bắt buộc" };
   }
   if (
     email.length === 0 ||
@@ -31,7 +31,7 @@ function validateUserInput({ name, email, password }) {
     userSchema.password.required &&
     (!password || typeof password !== "string")
   ) {
-    return { status: 400, error: "Mật khẩu là bắt buộc" };
+    return { status: 400, message: "Mật khẩu là bắt buộc" };
   }
   if (
     password.length < userSchema.password.minLength ||
@@ -39,7 +39,7 @@ function validateUserInput({ name, email, password }) {
   ) {
     return {
       status: 400,
-      error: `Mật khẩu phải tối thiểu ${userSchema.password.minLength} đến ${userSchema.password.maxLength} ký tự`,
+      message: `Mật khẩu phải tối thiểu ${userSchema.password.minLength} đến ${userSchema.password.maxLength} ký tự`,
     };
   }
   return null;
