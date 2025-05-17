@@ -1,15 +1,16 @@
 const pool = require("../config/db");
 
-exports.getAllTodo = async () => {
+exports.getAllTodos = async () => {
   const [rows] = await pool.execute("SELECT * FROM todo");
   return rows;
 };
 
-exports.getTodo = async (limit, offset) => {
-  const [rows] = await pool.execute("SELECT * FROM todo LIMIT ? OFFSET ?", [
-    limit,
-    offset,
-  ]);
+exports.getPaginateTodo = async (limit, offset) => {
+  limit = parseInt(limit, 10);
+  offset = parseInt(offset, 10);
+  const [rows] = await pool.execute(
+    `SELECT * FROM todo LIMIT ${limit} OFFSET ${offset}`
+  );
   return rows;
 };
 
@@ -39,4 +40,14 @@ exports.checkTypeIdExists = async (type_id) => {
     type_id,
   ]);
   return rows.length > 0;
+};
+
+exports.getTodoById = async (id) => {
+  const [rows] = await pool.execute("SELECT * FROM todo WHERE id = ?", [id]);
+  return rows[0];
+};
+
+exports.countTodos = async () => {
+  const [rows] = await pool.execute("SELECT COUNT(*) as total FROM todo");
+  return rows[0].total;
 };

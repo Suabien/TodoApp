@@ -1,11 +1,26 @@
-class Todo {
-  constructor({ id, content, description, type_id, isDone }) {
-    this.id = id;
-    this.content = content;
-    this.description = description;
-    this.type_id = type_id;
-    this.isDone = isDone;
-  }
-}
+const todoSchema = {
+  id: {
+    type: "number",
+    required: false,
+  },
+  content: {
+    type: "string",
+    required: true,
+    maxLength: 255,
+  },
+  description: {
+    type: "string",
+    required: false,
+  },
+  type_id: {
+    type: "number",
+    required: false,
+  },
+  isDone: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
+};
 
-module.exports = Todo;
+module.exports = { todoSchema };

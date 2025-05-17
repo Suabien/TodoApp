@@ -1,19 +1,24 @@
 const todoService = require("../service/todoService");
 
-exports.getAllTodo = async (req, res) => {
+exports.getAllTodos = async (req, res) => {
   try {
-    const todos = await todoService.getAllTodo();
+    const todos = await todoService.getAllTodos();
     res.status(200).json(todos);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
-exports.getTodo = async (req, res) => {
+exports.getPaginateTodo = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
-    const todos = await todoService.getTodo(page, limit);
-    res.status(200).json(todos);
+    let { page, limit } = req.query;
+    page = Number(page);
+    limit = Number(limit);
+    const result = await todoService.getPaginateTodo(page, limit);
+    if (!result.status || result.status !== 200) {
+      return res.status(result.status || 400).json({ message: result.error });
+    }
+    res.status(200).json(result);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
