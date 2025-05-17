@@ -35,8 +35,8 @@ exports.deleteTodo = async (id) => {
   return result;
 };
 
-exports.checkTypeIdExists = async (type_id) => {
-  const [rows] = await pool.execute("SELECT id FROM type WHERE id = ?", [
+exports.findTypeById = async (type_id) => {
+  const [rows] = await pool.execute("SELECT * FROM type WHERE id = ?", [
     type_id,
   ]);
   return rows.length > 0;
